@@ -31,7 +31,7 @@ int main() {
 		std::cout << "Multiplications: " << m1 << ", " << m2 << ", " << m1m2 << ", " << m2m1
 		          << '\n';
 		std::cout << "Equal to itself times identity? " << std::boolalpha
-		          << (m2m1 == (m2m1 * mat::make_identity<double, 3>())) << '\n';
+		          << (m2m1 == m2m1 * mat::make_identity<double, 3>()) << '\n';
 	}
 
 	std::cout << '\n';
