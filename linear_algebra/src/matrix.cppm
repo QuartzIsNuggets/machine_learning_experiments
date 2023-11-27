@@ -1,6 +1,7 @@
 module;
 
 #include <array>
+#include <concepts>
 #include <ostream>
 
 
@@ -90,14 +91,14 @@ struct mat::Matrix {
 
 public:
 	typedef T value_type;
-	typedef std::array<T, R * C> array_type;
+	typedef std::array<value_type, R * C> array_type;
 
 public:
 	static constexpr std::array<std::size_t, 2> shape = {R, C};
 
 public:
 	[[nodiscard]] constexpr Matrix() noexcept;
-	[[nodiscard]] explicit constexpr Matrix(const std::array<T, R * C> &data) noexcept;
+	[[nodiscard]] explicit constexpr Matrix(const array_type &data) noexcept;
 	template<la::scalar U>
 	requires std::convertible_to<U, T>
 	[[nodiscard]] constexpr Matrix(const Matrix<U, R, C> &other) noexcept;
@@ -148,7 +149,9 @@ template<la::scalar T, std::size_t R, std::size_t C>
 constexpr mat::Matrix<T, R, C>::Matrix() noexcept : Matrix(std::array<T, R * C>{}) {}
 
 template<la::scalar T, std::size_t R, std::size_t C>
-constexpr mat::Matrix<T, R, C>::Matrix(const std::array<T, R * C> &data) noexcept : m_data{data} {}
+constexpr mat::Matrix<T, R, C>::Matrix(
+		const mat::Matrix<T, R, C>::array_type &data
+) noexcept : m_data{data} {}
 
 template<la::scalar T, std::size_t R, std::size_t C>
 template<la::scalar U>
